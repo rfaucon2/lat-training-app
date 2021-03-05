@@ -35,6 +35,16 @@ class App(tk.Frame):
         self.consigne = tk.StringVar()
         #init the background color variable
         self.bgcolor = "#1f1f1f"
+        #use the init functions
+        self.initvariables()
+        self.initWindow()
+        self.initDB()
+        self.getDBLength()
+        self.initLevelChoiceScreen()
+        
+
+
+    def initvariables(self):
         #Init the answer variables
         self.answer = ""
         self.trueAnswer = tk.StringVar()
@@ -42,11 +52,12 @@ class App(tk.Frame):
         self.done = []
         #init the variable the contain the last verbe done
         self.last = ""
-        #use the init functions
-        self.initWindow()
-        self.initDB()
-        self.getDBLength()
-        self.initLevelChoiceScreen()
+        #init the point variable
+        self.point = 0
+        self.pointCounterLabel = tk.StringVar()
+        self.pointCounterLabel.set("Points: "+str(self.point))
+        #Init the consigne variable
+        self.consigne = tk.StringVar()
 
     def initWindow(self):
         #Init the size of the window
@@ -109,6 +120,7 @@ class App(tk.Frame):
 
     def initGameWindow(self):
         self.clearWindow()
+        self.initvariables()
 
         #Create space to make the window look good
         self.space = tk.Label(self.root, text='', pady=25, padx=40, bg=self.bgcolor)
@@ -131,6 +143,14 @@ class App(tk.Frame):
         self.answerEntry.grid(row=3, column=1)
         self.label = tk.Label(self.root, text = "Appuyez sur entrer\npour valider", bg=self.bgcolor, fg='white')
         self.label.grid(row=4, column=1)
+
+        #Create space to make the window look good
+        self.space = tk.Label(self.root, text='', font=("Courrier", 5), bg=self.bgcolor)
+        self.space.grid(row=5, column=0)
+
+        #Create a button to go to the menu
+        self.lv1 = tk.Button(self.root, text="End", command=self.endGame, font=("Courrier", 15))
+        self.lv1.grid(row=6, column=0, sticky='sw')
 
         #Bind the key enter to the function verifAnswer
         self.root.bind('<Return>', self.verifAnswer)
@@ -325,7 +345,7 @@ class App(tk.Frame):
         self.label.grid(row=1, column=1)
 
         #Create space to make the window look good
-        self.space = tk.Label(self.root, text='', pady=30, padx=40, bg=self.bgcolor)
+        self.space = tk.Label(self.root, text='', pady=10, padx=40, bg=self.bgcolor)
         self.space.grid(row=2, column=0)
 
         #Display the number of question successed
@@ -335,6 +355,23 @@ class App(tk.Frame):
         #Display the percentage of succed
         self.label = tk.Label(self.root, text=(str((self.point/self.baseLength)*100)+r"% de reussite"), font=("Courrier", 15), fg='white', bg=self.bgcolor)
         self.label.grid(row=4, column=1)
+
+        #Create space to make the window look good
+        self.space = tk.Label(self.root, text='', pady=25, padx=40, bg=self.bgcolor)
+        self.space.grid(row=5, column=0)
+
+        #Create space to make the window look good
+        self.space = tk.Label(self.root, text='', padx=40, bg=self.bgcolor)
+        self.space.grid(row=5, column=3)
+
+        #Create a button to quit the app
+        self.lv1 = tk.Button(self.root, text="Quit", command=self.root.destroy, font=("Courrier", 15))
+        self.lv1.grid(row=6, column=0, sticky='sw', padx=5)
+
+        #Create a button to go to the menu
+        self.lv1 = tk.Button(self.root, text="Menu", command=self.initLevelChoiceScreen, font=("Courrier", 15))
+        self.lv1.grid(row=6, column=2, sticky='se', padx=50)
+        
 
 if __name__ == '__main__':
     #Create the window

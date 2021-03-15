@@ -336,6 +336,7 @@ class App(tk.Frame):
 
     def endGame(self):
         self.clearWindow()
+        self.root.unbind('<Return>')
 
         #Create space to make the window look good
         self.space = tk.Label(self.root, text='', pady=25, padx=70, bg=self.bgcolor)
